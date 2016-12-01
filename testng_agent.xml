@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default suite">
+	<test verbose="2" name="Default test">
+		<classes>
+			<class name="com.sinodata.test.TestAgentInterface" />
+				<methods>
+					<exclude name="voiceLogin" />
+					<exclude name="rechargeWithdrawDetailQuery" />
+					<exclude name="userAccountQuery" />
+					<exclude name="cancelMoreBet" />
+					<exclude name="cancelMoreBetQuery" />
+					<exclude name="synTime" />
+					<exclude name="userTradeQuery" />
+					<exclude name="currentTermWinCodeQuery" />
+					<exclude name="winCodeQuery" />
+					<exclude name="winNoticeQuery" />
+					<exclude name="winQueryNotice" />
+					<exclude name="winAddressQuery" />
+					<exclude name="mutilNewTermQuery" />
+					<exclude name="winDetailQuery" />
+					<exclude name="winSellDetailQuery" />
+					<exclude name="userPromotionQuery" />
+					<exclude name="changeMobile" />
+					<exclude name="mobileFeeToBet" />
+					<exclude name="winToMobileFee" />
+					<exclude name="userQueryUseInfo" />
+					<exclude name="userNoticeQuery" />
+					<exclude name="promoQuery" />
+					<exclude name="promoSend" />
+					<include name="requestSMS" />
+					<exclude name="rechargeWithdrawQuery" />
+					<exclude name="filenameQuery" />
+					<exclude name="tobuyDataQuery" />
+					<exclude name="bookCommonQuery" />
+					<exclude name="bookQueryCommon" />
+					<exclude name="bookBetMoreQuery" />
+					<exclude name="bookQueryBetMore" />
+					<exclude name="bookTobuyQuery" />
+					<exclude name="bookTobuyBetQuery" />
+					<exclude name="termBetQuery" />
+					<exclude name="tobuyEncashQuery" />
+					<exclude name="accountPageQuery" />
+					<exclude name="commOrderQuery" />
+					<exclude name="betMoreQuery" />
+					<exclude name="tobuyQuery" />
+					<exclude name="tobuyRuncodeQuery" />
+				</methods>
+		</classes>
+	</test> <!-- Default test -->
+</suite> <!-- Default suite -->

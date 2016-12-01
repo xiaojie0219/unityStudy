@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default suite">
+	<test verbose="2" name="Default test">
+		<classes>
+			<class name="com.sinodata.test.TestApiInterface" />
+			<methods>
+				<exclude name="register" />
+				<include name="login" />
+				<exclude name="teminaLogin" />
+				<exclude name="cash" />
+				<exclude name="recharge" />
+				<exclude name="bindBank" />
+				<exclude name="bindBankQuery" />
+				<exclude name="betTakeEffect" />
+				<exclude name="betMoreTakeEffect" />
+				<exclude name="loginOut" />
+				<exclude name="unbundlingBank" />
+				<exclude name="updateMobile" />
+				<exclude name="tobuyBet" />
+				<exclude name="tobuySponsor" />
+				<exclude name="tobuyJoin" />
+				<exclude name="updateUserName" />
+				<exclude name="updatePassword" />
+				<exclude name="retrievePass" />
+				<exclude name="queryOrder" />
+				<exclude name="teminalCash" />
+				<exclude name="cancelAccount" />
+			</methods>
+		</classes>
+	</test> <!-- Default test -->
+</suite> <!-- Default suite -->

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default suite">
+	<test verbose="2" name="Default test">
+		<classes>
+			<class name="com.sinodata.test.TestApiInterface" />
+				<methods>
+					<exclude name="register" />
+					<include name="login" />
+					<exclude name="recharge" />
+					<exclude name="cash" />
+					<exclude name="bindBank" />
+					<exclude name="bindBankQuery" />
+					<include name="betTakeEffect" />
+					<exclude name="loginOut" />
+					<exclude name="unbundlingBank" />
+					<exclude name="updateMobile" />
+					<exclude name="tobuyBet" />
+				</methods>
+			<class name="com.sinodata.test.TestSinoInterface" />
+				<methods>
+					<exclude name="loginCheck" />
+					<exclude name="cashAccBusiness" />
+					<exclude name="stationAgentQuery" />
+					<exclude name="noticeQuery" />
+					<exclude name="uptPass" />
+					<exclude name="accPageQuery" />
+					<exclude name="agentSellQuery" />
+					<exclude name="queryUserPage" />
+					<exclude name="cashApply" />
+					<exclude name="queryUseInfo" />
+					<exclude name="queryAgentList" />
+				</methods>
+			<class name="com.sinodata.test.TestAgentInterface" />
+				<methods>
+					<exclude name="rechargeWithdrawDetailQuery" />
+					<exclude name="userAccountQuery" />
+					<exclude name="cancelMoreBet" />
+					<exclude name="cancelMoreBetQuery" />
+					<exclude name="betTakeEffectQuery" />
+					<exclude name="synTime" />
+					<exclude name="userTradeQuery" />
+					<exclude name="currentTermWinCodeQuery" />
+					<exclude name="winCodeQuery" />
+					<exclude name="winNoticeQuery" />
+					<exclude name="mutilNewTermQuery" />
+					<exclude name="winDetailQuery" />
+					<exclude name="winSellDetailQuery" />
+					<exclude name="userPromotionQuery" />
+					<exclude name="voiceLogin" />
+					<exclude name="changeMobile" />
+					<exclude name="mobileFeeToBet" />
+					<exclude name="winToMobileFee" />
+					<exclude name="userQueryUseInfo" />
+					<exclude name="userNoticeQuery" />
+					<exclude name="promoQuery" />
+					<exclude name="promoSend" />
+					<exclude name="requestSMS" />
+					<exclude name="rechargeWithdrawQuery" />
+					<exclude name="filenameQuery" />
+				</methods>
+		</classes>
+	</test> <!-- Default test -->
+</suite> <!-- Default suite -->

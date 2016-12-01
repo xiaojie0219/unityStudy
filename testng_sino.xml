@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default suite">
+	<test verbose="2" name="Default test">
+		<classes>
+			<class name="com.sinodata.test.TestSinoInterface" />
+				<methods>
+					<include name="loginCheck" />
+					<include name="cashAccBusiness" />
+					<exclude name="stationAgentQuery" />
+					<exclude name="noticeQuery" />
+					<exclude name="uptPass" />
+					<exclude name="accPageQuery" />
+					<exclude name="agentSellQuery" />
+					<exclude name="queryUserPage" />
+					<exclude name="cashApply" />
+					<exclude name="queryUseInfo" />
+					<exclude name="queryAgentList" />
+				</methods>
+		</classes>
+	</test> <!-- Default test -->
+</suite> <!-- Default suite -->
