@@ -38,7 +38,7 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求_调用jar包中的HTTP请求方法(查询开奖公告)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求(查询开奖公告)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
 		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
@@ -53,19 +53,24 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"));
+					map.get("DES3"), map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"请求sendPost4QueryPrize测试开奖公告查询"输出到Jmeter的察看结果树中的请求里。
-			sr.setRequestHeaders("请求sendPost4QueryPrize测试开奖公告查询");
+			sr.setRequestHeaders("开奖公告查询");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseDataQueryPrize());
-			if (resultData != null && resultData.length() > 0) {
-				sr.setResponseData("结果是：" + resultData, null);
+			resultData = String.valueOf(hr.getResponseData4QueryPrize());
+			if (resultData != null && resultData.length() > 0 ) {
+				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);
+				if (resultData.contains("SUCCESS")){
+					sr.setSuccessful(true);
+				}else{
+					sr.setSuccessful(false);
+				}
 			}
-			 System.out.println("响应解密后：" + resultData);
-			sr.setSuccessful(true);
+			
+//			 System.out.println("响应解密后：" + resultData);
 		} catch (Throwable e) {
 			sr.setSuccessful(false);
 			e.printStackTrace();
@@ -83,7 +88,7 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 
 	// main只是为了调试用，最后打jar包的时候注释掉。
 
-	/*
+/*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Arguments params = new Arguments();
@@ -105,6 +110,6 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 		tjs.runTest(arg0);
 		tjs.teardownTest(arg0);
 	}
-	*/
+*/
 
 }

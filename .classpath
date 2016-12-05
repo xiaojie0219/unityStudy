@@ -74,11 +74,16 @@
 	<classpathentry kind="lib" path="D:/apache-jmeter-2.13/lib/ext/ApacheJMeter_monitors.jar"/>
 	<classpathentry kind="lib" path="D:/apache-jmeter-2.13/lib/ext/ApacheJMeter_native.jar"/>
 	<classpathentry kind="lib" path="D:/apache-jmeter-2.13/lib/ext/ApacheJMeter_tcp.jar"/>
-	<classpathentry kind="lib" path="D:/java_lib/commons-beanutils-1.7.0.jar"/>
-	<classpathentry kind="lib" path="D:/java_lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="D:/java_lib/commons-lang-2.5.jar"/>
-	<classpathentry kind="lib" path="D:/java_lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="D:/java_lib/ezmorph-1.0.3.jar"/>
-	<classpathentry kind="lib" path="D:/java_lib/json-lib-2.1-jdk15.jar"/>
+	<classpathentry kind="lib" path="D:/lib/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/fastjson-1.1.42.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/javacsv.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/json-lib-2.3-jdk15.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/json.jar"/>
+	<classpathentry kind="lib" path="LIB_HOME/jacob.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
