@@ -8,7 +8,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSampleAuth extends AbstractJavaSamplerClient {
+public class TestJavaSampleAuth extends AbstractJavaSamplerClient implements ITestJavaSample{
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -37,7 +37,7 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient {
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求_调用jar包中的HTTP请求方法(查询开奖公告)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求_调用jar包中的HTTP请求方法(身份验证)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
 		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
@@ -50,7 +50,7 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient {
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"), map);
+					map.get("DES3"), map.get("ipAndPort"));
 			
 			// 通过下面的操作可以将"请求sendPost4QueryPrize测试开奖公告查询"输出到Jmeter的察看结果树中的请求里。
 			sr.setRequestHeaders("请求requestDataAuth测试身份验证");

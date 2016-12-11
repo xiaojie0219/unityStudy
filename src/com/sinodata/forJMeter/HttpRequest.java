@@ -19,10 +19,9 @@ public class HttpRequest {
 	
 	private Map<String,String> mapData = null;
 	
-	public HttpRequest(String agentSecretKey, String des3, String ipAndPort, Map<String,String> mapData){
+	public HttpRequest(String agentSecretKey, String des3, String ipAndPort){
 		HttpRequest.agentSecretKey = agentSecretKey;
 		threeDES = new ThreeDES(des3);
-		this.mapData = mapData;
 		this.ipAndPort = ipAndPort;
 	}
 	

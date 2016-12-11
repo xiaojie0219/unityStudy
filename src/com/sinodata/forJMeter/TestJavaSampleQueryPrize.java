@@ -53,7 +53,7 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"), map);
+					map.get("DES3"), map.get("ipAndPort"));
 			
 			// 通过下面的操作可以将"请求sendPost4QueryPrize测试开奖公告查询"输出到Jmeter的察看结果树中的请求里。
 			sr.setRequestHeaders("请求sendPost4QueryPrize测试开奖公告查询");
