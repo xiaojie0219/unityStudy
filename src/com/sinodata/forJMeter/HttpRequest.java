@@ -18,7 +18,6 @@ public class HttpRequest {
 	private static String agentSecretKey = null;
 	private static ThreeDES threeDES = null;
 	private String ipAndPort = null;
-	
 	private Map<String,String> mapData = null;
 	
 	public HttpRequest(String agentSecretKey, String des3, String ipAndPort, Map<String,String> map){
@@ -69,7 +68,6 @@ public class HttpRequest {
 			return null;
 		}
 	}
-	
 	public byte[] sendPostQueryPrize() throws UnsupportedEncodingException{
 		byte[] data = requestDataQueryPrize();
 		String url = "http://" + ipAndPort
@@ -211,7 +209,6 @@ public class HttpRequest {
 		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
 		return b;
 	}
-	
 	public byte[] requestDataQueryPrize() throws UnsupportedEncodingException{
 		byte[] b = null;
 		
@@ -231,7 +228,6 @@ public class HttpRequest {
 		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
 		return b;
 	}
-	
 	public byte[] requestDataQueryTerm() throws UnsupportedEncodingException{
 		byte[] b = null;
 		
@@ -250,7 +246,6 @@ public class HttpRequest {
 		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
 		return b;
 	}
-	
 	public byte[] requestDataQueryTicketEx() throws UnsupportedEncodingException{
 		byte[] b = null;
 		
@@ -279,7 +274,6 @@ public class HttpRequest {
 	public String getResponseData4QueryTicketEx() throws  UnsupportedEncodingException, Exception{
 		return new String(threeDES.decryptMode(sendPostQueryTicketEx(), agentSecretKey),"UTF-8");
 	}
-
 	public String getResponseData4QueryTerm() throws UnsupportedEncodingException, Exception {
 		return new String(threeDES.decryptMode(sendPostQueryTerm(), agentSecretKey),"UTF-8");
 	}

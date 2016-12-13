@@ -22,8 +22,7 @@ public class TestJavaSampleQueryTerm extends AbstractJavaSamplerClient{
 		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200003");
 		params.addArgument("DES3", "zhongxinyinhang123456789");
 		params.addArgument("GameId", "B001");
-		params.addArgument("TermCode", "");
-		params.addArgument("PartnerId", "20001");
+		params.addArgument("PartnerId", "00003");
 		params.addArgument("TimeStamp", "2016-04-27 10:39:10");
 		params.addArgument("SerialNum", "2016040001113");
 		params.addArgument("Version", "1.0.0.0");
@@ -55,7 +54,7 @@ public class TestJavaSampleQueryTerm extends AbstractJavaSamplerClient{
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
 					map.get("DES3"), map.get("ipAndPort"),map);
 			
-			// 通过下面的操作可以将"请求sendPost4QueryPrize测试开奖公告查询"输出到Jmeter的察看结果树中的请求里。
+			// 通过下面的操作可以将"测试查询新期"输出到Jmeter的察看结果树中的请求里。
 			sr.setRequestHeaders("测试查询新期");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
