@@ -8,7 +8,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
+public class TestJavaSampleQueryCode extends AbstractJavaSamplerClient {
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -38,7 +38,7 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求(查询开奖公告queryPrize)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求(开奖号码查询queryCode)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
 		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
@@ -59,7 +59,7 @@ public class TestJavaSampleQueryPrize extends AbstractJavaSamplerClient {
 			sr.setRequestHeaders("开奖公告查询");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4QueryPrize());
+			resultData = String.valueOf(hr.getResponseData4QueryCode());
 			if (resultData != null && resultData.length() > 0 ) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);
