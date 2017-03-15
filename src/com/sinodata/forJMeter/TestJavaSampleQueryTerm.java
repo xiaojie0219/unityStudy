@@ -21,12 +21,14 @@ public class TestJavaSampleQueryTerm extends AbstractJavaSamplerClient{
 		params.addArgument("ipAndPort", "10.10.35.146:8188");
 		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200003");
 		params.addArgument("DES3", "zhongxinyinhang123456789");
-		params.addArgument("GameId", "B001");
+		
 		params.addArgument("PartnerId", "00003");
 		params.addArgument("TimeStamp", "2016-04-27 10:39:10");
 		params.addArgument("SerialNum", "2016040001113");
 		params.addArgument("Version", "1.0.0.0");
 		params.addArgument("Token", "92EA48927E3BFA1755A64FBC16B6B901");
+		
+		params.addArgument("GameId", "B001");
 		
 		return params;
 	}
