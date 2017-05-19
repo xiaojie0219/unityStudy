@@ -1,4 +1,4 @@
-package com.sinodata.forJMeter;
+package com.sinodata.forRobot;
 
 import java.io.UnsupportedEncodingException;
 
@@ -33,7 +33,7 @@ public class JsonJiaJieMi {
 	
 	public static void main(String args[]) throws UnsupportedEncodingException, Exception{
 		JsonJiaJieMi jjj = new JsonJiaJieMi("0FD2672D2A5A5C4DA5200002","zhongxinyinhang123456789");
-		String str = new String(jjj.jiaMiNoBASE64("hello world"),"UTF-8");
+		String str = new String(jjj.jiaMiNoBASE64("hello world111111111111111"),"UTF-8");
 		System.out.println("加密后：" + str);
 		
 //		System.out.println("解密后：" + jjj.jieMiNoBASE64(str));

@@ -8,7 +8,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
+public class TestJavaSampleLottMoney extends AbstractJavaSamplerClient {
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -18,7 +18,7 @@ public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
 	// 设置可用参数以及它们的默认值；
 	public Arguments getDefaultParameters() {
 		Arguments params = new Arguments();
-		params.addArgument("ipAndPort", "10.10.43.149:8188");
+		params.addArgument("ipAndPort", "10.10.35.146:8188");
 		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200003");
 		params.addArgument("DES3", "zhongxinyinhang123456789");
 		
@@ -28,7 +28,12 @@ public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
 		params.addArgument("Version", "1.0.0.0");
 		params.addArgument("Token", "92EA48927E3BFA1755A64FBC16B6B901");
 		
-		params.addArgument("TicketCode", "");
+		params.addArgument("RunCode", "");
+		params.addArgument("StationId", "");
+		params.addArgument("PaymentAmount", "");
+		params.addArgument("PaymentDate", "");
+		params.addArgument("PaymentTime", "");
+		params.addArgument("CheckCode", "default");
 		return params;
 	}
 
@@ -39,46 +44,63 @@ public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求(彩票查询)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求(站点缴款)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
 		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
 		map.put("DES3", arg0.getParameter("DES3"));
+		
 		map.put("PartnerId", arg0.getParameter("PartnerId"));
 		map.put("TimeStamp", arg0.getParameter("TimeStamp"));
 		map.put("SerialNum", arg0.getParameter("SerialNum"));
 		map.put("Version", arg0.getParameter("Version"));
 		map.put("Token", arg0.getParameter("Token"));
-		map.put("TicketCode", arg0.getParameter("TicketCode"));
+		
+		map.put("RunCode", arg0.getParameter("RunCode"));
+		map.put("StationId", arg0.getParameter("StationId"));
+		map.put("PaymentAmount", arg0.getParameter("PaymentAmount"));
+		map.put("PaymentDate", arg0.getParameter("PaymentDate"));
+		map.put("PaymentTime", arg0.getParameter("PaymentTime"));
+		String strCheckCode = arg0.getParameter("CheckCode");
+		if("default".equals(strCheckCode)){
+			UtilsList ul = new UtilsList();
+			StringBuffer sb = new StringBuffer();
+			sb.append(arg0.getParameter("RunCode")).append("|");
+			sb.append(arg0.getParameter("StationId")).append("|");
+			sb.append(arg0.getParameter("PaymentAmount")).append("|");
+			sb.append(arg0.getParameter("PaymentDate")).append("|");
+			sb.append(arg0.getParameter("PaymentTime")).append("|");
+			map.put("CheckCode", ul.getCheckCode(sb.toString()));
+		}else{
+			map.put("CheckCode", strCheckCode);
+		}
+		
 		try {
-			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
-			//调用HttpRequest原始请求方法
+			sr.sampleStart();// jmeter 开始统计响应时间标记
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
 					map.get("DES3"), map.get("ipAndPort"),map);
 			
-			// 通过下面的操作可以将"测试身份验证"输出到Jmeter的察看结果树中的请求里。
-			sr.setRequestHeaders("测试彩票查询");
+			// 通过下面的操作可以将"测试查询彩票信息"输出到Jmeter的察看结果树中的请求里。
+			sr.setRequestHeaders("测试站点缴款");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4AgentTicket());
-			if (resultData != null && resultData.length() > 0) {
+			resultData = String.valueOf(hr.getResponseData4LottMoney());
+			if (resultData != null && resultData.length() > 0 ) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);
-				sr.setSuccessful(true);
-				/**
 				if (resultData.contains("SUCCESS")){
-					sr.setSuccessful(true);//设置测试结果标记为成功，则在察看结果树中显示为绿色。如标记为失败，则显示为红色
+					sr.setSuccessful(true);
 				}else{
 					sr.setSuccessful(false);
 				}
-				*/
 			}
+			
 //			 System.out.println("响应解密后：" + resultData);
 		} catch (Throwable e) {
 			sr.setSuccessful(false);
 			e.printStackTrace();
 		} finally {
-			sr.sampleEnd();// jmeter 结束统计响应时间标记，类似于LR的事务结束点
+			sr.sampleEnd();// jmeter 结束统计响应时间标记
 		}
 		return sr;
 	}
@@ -89,29 +111,4 @@ public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
 		// System.out.println("The cost is"+(end-start)/1000);
 	}
 
-	// main只是为了调试用，最后打jar包的时候注释掉。
-/*
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Arguments params = new Arguments();
-		params.addArgument("ipAndPort", "10.10.35.146:8188");// 设置参数，并赋予默认值
-		params.addArgument("interfaceName", "auth");
-		params.addArgument("agentSecretKey", "E433B7E634E78EBB9A467OPU");
-		params.addArgument("DES3", "zhongxinyinhang123456789");
-		params.addArgument(
-				"Sign",
-				"SIKnEgpRix0lXhfXheMqGyZpHqEkojI8V8zTTHfwVl6hklyb2tK99En4ZHlH/hz2UFbV8KR5vrA+pd6XTi5Ujd2ilkbjgSRATCvUg3WcNoQaAsyXYnsFVqbljBV0EAmgRSHGGp3yZBew8t/lM2Hf92VjjvoKpIURdbCICctVK8I=");
-		params.addArgument("PartnerId", "00003");
-		params.addArgument("TimeStamp", "2016-10-24 15:10:10");
-		params.addArgument("SerialNum", "1234567");
-		params.addArgument("Version", "1.0.0.0");
-
-		JavaSamplerContext arg0 = new JavaSamplerContext(params);
-
-		TestJavaSampleAuth tjs = new TestJavaSampleAuth();
-		tjs.setupTest(arg0);
-		tjs.runTest(arg0);
-		tjs.teardownTest(arg0);
-	}
-*/
 }

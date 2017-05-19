@@ -8,7 +8,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSampleAuth extends AbstractJavaSamplerClient{
+public class TestJavaSample4OrderCreate extends AbstractJavaSamplerClient{
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -18,14 +18,21 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient{
 	// 设置可用参数以及它们的默认值；
 	public Arguments getDefaultParameters() {
 		Arguments params = new Arguments();
-		params.addArgument("ipAndPort", "10.10.35.146:8188");
-		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200003");
+		params.addArgument("ipAndPort", "10.10.36.142:8189");
+		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200001");
 		params.addArgument("DES3", "zhongxinyinhang123456789");
-		params.addArgument("Sign", "SIKnEgpRix0lXhfXheMqGyZpHqEkojI8V8zTTHfwVl6hklyb2tK99En4ZHlH/hz2UFbV8KR5vrA+pd6XTi5Ujd2ilkbjgSRATCvUg3WcNoQaAsyXYnsFVqbljBV0EAmgRSHGGp3yZBew8t/lM2Hf92VjjvoKpIURdbCICctVK8I=");
-		params.addArgument("PartnerId", "00003");
-		params.addArgument("TimeStamp", "2016-10-24 15:10:10");
-		params.addArgument("SerialNum", "1234567");
+		
+		params.addArgument("PartnerId", "00001");
+		params.addArgument("TimeStamp", "2016-04-27 10:39:10");
+		params.addArgument("SerialNum", "2016040001113");
 		params.addArgument("Version", "1.0.0.0");
+		params.addArgument("AreaCode", "0000");
+		
+		params.addArgument("StationCode", "");
+		params.addArgument("Barcode", "");
+		params.addArgument("OutOrderId", "");
+		params.addArgument("OrderMoney", "");
+		params.addArgument("OpreratorId", "");
 		
 		return params;
 	}
@@ -37,16 +44,23 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient{
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求(身份验证)");//察看结果树的标题显示
-		Map<String, String> map = new HashMap<String, String>();//定义map，并将java方法参数值保存到map中，供HttpRequest构造方法使用
+		sr.setSampleLabel("Java请求(条码支付创建订单)");//察看结果树的标题显示
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
 		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
 		map.put("DES3", arg0.getParameter("DES3"));
-		map.put("Sign", arg0.getParameter("Sign"));
+		
 		map.put("PartnerId", arg0.getParameter("PartnerId"));
 		map.put("TimeStamp", arg0.getParameter("TimeStamp"));
 		map.put("SerialNum", arg0.getParameter("SerialNum"));
 		map.put("Version", arg0.getParameter("Version"));
+		map.put("AreaCode", arg0.getParameter("AreaCode"));
+		
+		map.put("StationCode", arg0.getParameter("StationCode"));
+		map.put("Barcode", arg0.getParameter("Barcode"));
+		map.put("OutOrderId", arg0.getParameter("OutOrderId"));
+		map.put("OrderMoney", arg0.getParameter("OrderMoney"));
+		map.put("OpreratorId", arg0.getParameter("OpreratorId"));
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
 			//调用HttpRequest原始请求方法
@@ -54,10 +68,10 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient{
 					map.get("DES3"), map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试身份验证"输出到Jmeter的察看结果树中的请求里。
-			sr.setRequestHeaders("测试身份验证");
+			sr.setRequestHeaders("测试条码支付创建订单");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4Auth());
+			resultData = String.valueOf(hr.getResponseData4OrderCreate());
 			if (resultData != null && resultData.length() > 0) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);

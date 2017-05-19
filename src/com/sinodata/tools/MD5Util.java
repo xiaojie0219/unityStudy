@@ -136,7 +136,7 @@ public class MD5Util {
 //		System.out.println("解密的：" + convertMD5(convertMD5(s)));
 		try {
 //			System.out.println("字符串MD5码加密:" + MD5Util.getMD5String("张三001\r\n002".getBytes("utf-8")));
-			System.out.println(MD5Util.getMD5String("0FD2672D2A5A5C4DA5200003".getBytes("utf-8")));
+			System.out.println(MD5Util.getMD5String("湖南快10	1030021	43010089	12345678	2.00	2016-06-27 19:36:00	15918271727	精神生	376361625361626262	湖南天心区	2016-06-28 09:36:01\r\n1287F8EB92797EBD25152C0D".getBytes("utf-8")));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

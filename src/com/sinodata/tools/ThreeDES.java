@@ -154,8 +154,8 @@ public class ThreeDES{
 		// , 0x77, 0x29, 0x74, (byte)0x98, 0x30, 0x40, 0x36, (byte)0xE2};
 
 
-		 String szSrc ="{\"tradestatus\":\"100000\",\"randomid\":\"abc123\",\"sellruncode\":\"123451311291213591234\",\"ticketcode\":\"0123456789ABCDEF0123\"}";
-
+//		 String szSrc ="{\"tradestatus\":\"100000\",\"randomid\":\"abc123\",\"sellruncode\":\"123451311291213591234\",\"ticketcode\":\"0123456789ABCDEF0123\"}";
+		 String szSrc = "hello world";
 
 
 		byte[] encoded = encryptMode(szSrc.getBytes());
@@ -248,5 +248,4 @@ public class ThreeDES{
 		}
 		return null;
 	}
-	
 }
