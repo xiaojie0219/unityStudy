@@ -19,12 +19,30 @@ public class HttpRequest {
 	private static ThreeDES threeDES = null;
 	private String ipAndPort = null;
 	private Map<String,String> mapData = null;
+	private JSONObject basicParam = new JSONObject();
+	private JSONObject reqContent = new JSONObject();
 	
-	public HttpRequest(String agentSecretKey, String des3, String ipAndPort, Map<String,String> map){
+	public HttpRequest(String agentSecretKey, String des3, String ipAndPort, Map<String,String> mapdata){
 		HttpRequest.agentSecretKey = agentSecretKey;
 		threeDES = new ThreeDES(des3);
 		this.ipAndPort = ipAndPort;
-		mapData = map;
+		mapData = mapdata;
+		for (String key : mapData.keySet()) {
+			String value = mapData.get(key);
+			if (!"ipAndPort".equals(key) && !"agentSecretKey".equals(key)
+					&& !"DES3".equals(key) && !"TestElement.name".equals(key)) {
+				if ("PartnerId".equals(key) || "TimeStamp".equals(key)
+						|| "SerialNum".equals(key) || "Version".equals(key)
+						|| "Token".equals(key)) {
+					basicParam.put(key, value);
+				} else {
+					reqContent.put(key, value);
+				}
+			}
+		}
+		basicParam.put("ReqContent", reqContent.toString());
+		System.out.println("============reqContent========="+reqContent.toString());
+		System.out.println("============basicParam========="+basicParam.toString());
 	}
 	private byte[] createUrl(byte[] data, String url){
 		try{
@@ -61,563 +79,96 @@ public class HttpRequest {
 			return null;
 		}
 	}
-	public byte[] sendPostAuth() throws UnsupportedEncodingException{
-		byte[] data = requestDataAuth();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=auth&partnerId="
+	public byte[] sendPost(String uri) throws UnsupportedEncodingException{
+		byte[] data = requestData();
+		String url = "http://" + ipAndPort + uri + "partnerId="
 				+ mapData.get("PartnerId") + "&hashType=md5&hash="
 				+ MD5Security.getMD5String(data);
 
-		return createUrl(data,url);
-	}
-	public byte[] sendPostQueryPrize() throws UnsupportedEncodingException{
-		byte[] data = requestDataQueryPrize();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=queryPrize&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	public byte[] sendPostQueryPrizeCode() throws UnsupportedEncodingException{
-		byte[] data = requestDataQueryPrizeCode();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=queryPrizeCode&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	public byte[] sendPostQueryCode() throws UnsupportedEncodingException{
-		byte[] data = requestDataQueryCode();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=queryCode&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	public byte[] sendPostQueryTerm() throws UnsupportedEncodingException{
-		byte[] data = requestDataQueryTerm();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=queryTerm&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	public byte[] sendPostQueryTicketEx() throws UnsupportedEncodingException{
-		byte[] data = requestDataQueryTicketEx();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=queryTicketEx&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	public byte[] sendPostAgentTicketInfo() throws UnsupportedEncodingException{
-		byte[] data = requestDataAgentTicketInfo();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=agentTicketInfo&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	public byte[] sendPostOrderCreate() throws UnsupportedEncodingException{
-		byte[] data = requestDataOrderCreate();
-		String url = "http://" + ipAndPort
-				+ "/api/access/pay?cmd=barcodeordercreate&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	public byte[] sendPostOrderQuery() throws UnsupportedEncodingException{
-		byte[] data = requestDataOrderQuery();
-		String url = "http://" + ipAndPort
-				+ "/api/access/pay?cmd=orderquery&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	public byte[] sendPostCTicketOrder() throws UnsupportedEncodingException{
-		byte[] data = requestDataCTicketOrder();
-		String url = "http://" + ipAndPort
-				+ "/access/CTicketOrder?partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	private byte[] sendPostAgentTicketData() throws UnsupportedEncodingException{
-		byte[] data = requestDataAgentTicketData();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=agentTicketData&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
+		return createUrl(data, url);
 	}
 
-	
-	public byte[] sendPostImageTicket() throws UnsupportedEncodingException{
-		byte[] data = requestDataImageTicket();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=imageTicket&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	private byte[] sendPostAgentTicket() throws UnsupportedEncodingException {
-		byte[] data = requestDataAgentTicket();
-		String url = "http://" + ipAndPort
-				+ "/api/access/do?cmd=agentTicket&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	private byte[] sendPostEncashCheckJkp() throws UnsupportedEncodingException {
-		byte[] data = requestDataEncashCheckJkp();
-		String url = "http://" + ipAndPort
-				+ "/access/comm/agent/encashCheckJkp?partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-
-	private byte[] sendPostEncashJkp() throws UnsupportedEncodingException {
-		byte[] data = requestDataEncashJkp();
-		String url = "http://" + ipAndPort
-				+ "/access/comm/agent/encashJkp?partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	private byte[] sendPostLottMoney() throws UnsupportedEncodingException {
-		byte[] data = requestDataLottMoney();
-		String url = "http://" + ipAndPort
-				+ "/access/lottMoney?partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-
-	private byte[] sendPostTicketOrder() throws UnsupportedEncodingException {
-		byte[] data = requestDataTicketOrder();
-		String url = "http://" + ipAndPort
-				+ "/api/access/notice?cmd=ticketorder&partnerId="
-				+ mapData.get("PartnerId") + "&hashType=md5&hash="
-				+ MD5Security.getMD5String(data);
-
-		return createUrl(data,url);
-	}
-	
-	private byte[] requestDataEncashJkp() throws UnsupportedEncodingException{
+	private byte[] requestData() throws UnsupportedEncodingException{
 		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("RunCode", mapData.get("RunCode"));
-		rc.put("CardId", mapData.get("CardId"));
-		rc.put("IMEI", mapData.get("IMEI"));
-		rc.put("MobileCode", mapData.get("MobileCode"));
-		rc.put("DataArea", mapData.get("DataArea"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	private byte[] requestDataEncashCheckJkp() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("RunCode", mapData.get("RunCode"));
-		rc.put("CardId", mapData.get("CardId"));
-		rc.put("IMEI", mapData.get("IMEI"));
-		rc.put("MobileCode", mapData.get("MobileCode"));
-		rc.put("DataArea", mapData.get("DataArea"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	public byte[] requestDataAuth() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("Sign", mapData.get("Sign"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	public byte[] requestDataQueryPrize() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("GameId", mapData.get("GameId"));
-		rc.put("TermCode", mapData.get("TermCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	public byte[] requestDataQueryPrizeCode() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("GameId", mapData.get("GameId"));
-		rc.put("TermCode", mapData.get("TermCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	public byte[] requestDataQueryCode() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("GameId", mapData.get("GameId"));
-		rc.put("TermCode", mapData.get("TermCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	public byte[] requestDataQueryTerm() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("GameId", mapData.get("GameId"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	public byte[] requestDataQueryTicketEx() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("TicketCode", mapData.get("TicketCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataOrderCreate() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("StationCode", mapData.get("StationCode"));
-		rc.put("Barcode", mapData.get("Barcode"));
-		rc.put("OutOrderId", mapData.get("OutOrderId"));
-		rc.put("OrderMoney", mapData.get("OrderMoney"));
-		rc.put("OpreratorId", mapData.get("OpreratorId"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("AreaCode", mapData.get("AreaCode"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataOrderQuery() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("StationCode", mapData.get("StationCode"));
-		rc.put("OrderId", mapData.get("OrderId"));
-		rc.put("OutOrderId", mapData.get("OutOrderId"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("AreaCode", mapData.get("AreaCode"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataCTicketOrder() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("OrderNo", mapData.get("OrderNo"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataTicketOrder() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("OrderNo", mapData.get("OrderNo"));
-		rc.put("OrderType", mapData.get("OrderType"));
-		rc.put("GameId", mapData.get("GameId"));
-		rc.put("TermCode", mapData.get("TermCode"));
-		rc.put("Money", mapData.get("Money"));
-		rc.put("PhoneCode", mapData.get("PhoneCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("AreaCode", mapData.get("AreaCode"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataAgentTicketInfo() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("TicketInfo", mapData.get("TicketInfo"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataAgentTicketData() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("TicketInfo", mapData.get("TicketInfo"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	public byte[] requestDataImageTicket() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("ImageUrl", mapData.get("ImageUrl"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	private byte[] requestDataAgentTicket() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("TicketCode", mapData.get("TicketCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
-		return b;
-	}
-	
-	private byte[] requestDataLottMoney() throws UnsupportedEncodingException{
-		byte[] b = null;
-		
-		JSONObject rc = new JSONObject();
-		rc.put("RunCode", mapData.get("RunCode"));
-		rc.put("StationId", mapData.get("StationId"));
-		rc.put("PaymentAmount", mapData.get("PaymentAmount"));
-		rc.put("PaymentDate", mapData.get("PaymentDate"));
-		rc.put("PaymentTime", mapData.get("PaymentTime"));
-		rc.put("CheckCode", mapData.get("CheckCode"));
-		
-		JSONObject bd = new JSONObject();
-		bd.put("PartnerId", mapData.get("PartnerId"));
-		bd.put("TimeStamp", mapData.get("TimeStamp"));
-		bd.put("SerialNum", mapData.get("SerialNum"));
-		bd.put("Version", mapData.get("Version"));
-		bd.put("Token", mapData.get("Token"));
-		
-		bd.put("ReqContent",rc.toString());
-		
-		b = threeDES.encryptMode(bd.toString().getBytes("UTF-8"), agentSecretKey);
+		b = threeDES.encryptMode(basicParam.toString().getBytes("UTF-8"), agentSecretKey);
 		return b;
 	}
 	
 	public String getResponseData4Auth() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostAuth(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=auth&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4QueryPrize() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostQueryPrize(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=queryPrize&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4QueryPrizeCode() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostQueryPrizeCode(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=queryPrizeCode&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4QueryCode() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostQueryCode(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=queryCode&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4QueryTicketEx() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostQueryTicketEx(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=queryTicketEx&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4QueryTerm() throws UnsupportedEncodingException, Exception {
-		return new String(threeDES.decryptMode(sendPostQueryTerm(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=queryTerm&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4ImageTicket() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostImageTicket(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=imageTicket&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4AgentTicket() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostAgentTicket(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=agentTicket&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4EncashCheckJkp() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostEncashCheckJkp(), agentSecretKey),"UTF-8");
+		String uri = "/access/comm/agent/encashCheckJkp?";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4EncashJkp() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostEncashJkp(), agentSecretKey),"UTF-8");
+		String uri = "/access/comm/agent/encashJkp?";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4LottMoney() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostLottMoney(), agentSecretKey),"UTF-8");
+		String uri = "/access/lottMoney?";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4AgentTicketInfo()  throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostAgentTicketInfo(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=agentTicketInfo&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4AgentTicketData() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostAgentTicketData(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/do?cmd=agentTicketData&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4OrderCreate() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostOrderCreate(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/pay?cmd=barcodeordercreate&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4OrderQuery() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostOrderQuery(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/pay?cmd=orderquery&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4TicketOrder() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostTicketOrder(), agentSecretKey),"UTF-8");
+		String uri = "/api/access/notice?cmd=ticketorder&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 	public String getResponseData4CTicketOrder() throws  UnsupportedEncodingException, Exception{
-		return new String(threeDES.decryptMode(sendPostCTicketOrder(), agentSecretKey),"UTF-8");
+		String uri = "/access/CTicketOrder?";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
+	}
+	public String getResponseData4LottMoneyCash() throws  UnsupportedEncodingException, Exception{
+		String uri = "/access/lottMoneyCash?";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
+	}
+	public String getResponseData4SendSms() throws  UnsupportedEncodingException, Exception{
+		String uri = "/api/access/do?cmd=sendSms&";
+		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
 
 	/*

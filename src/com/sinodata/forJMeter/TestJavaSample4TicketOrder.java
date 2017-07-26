@@ -1,6 +1,7 @@
 package com.sinodata.forJMeter;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.jmeter.config.Arguments;
@@ -47,22 +48,12 @@ public class TestJavaSample4TicketOrder extends AbstractJavaSamplerClient{
 		SampleResult sr = new SampleResult();
 		sr.setSampleLabel("Java请求(电脑票出票通知)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
-		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
-		map.put("DES3", arg0.getParameter("DES3"));
-		
-		map.put("PartnerId", arg0.getParameter("PartnerId"));
-		map.put("TimeStamp", arg0.getParameter("TimeStamp"));
-		map.put("SerialNum", arg0.getParameter("SerialNum"));
-		map.put("Version", arg0.getParameter("Version"));
-		map.put("AreaCode", arg0.getParameter("AreaCode"));
-		
-		map.put("OrderNo", arg0.getParameter("OrderNo"));
-		map.put("OrderType", arg0.getParameter("OrderType"));
-		map.put("GameId", arg0.getParameter("GameId"));
-		map.put("TermCode", arg0.getParameter("TermCode"));
-		map.put("Money", arg0.getParameter("Money"));
-		map.put("PhoneCode", arg0.getParameter("PhoneCode"));
+		Iterator<String> it = arg0.getParameterNamesIterator();
+		while (it.hasNext()){
+			String key = (String) it.next();
+			String value = arg0.getParameter(key);
+			map.put(key, value);
+		}
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
 			//调用HttpRequest原始请求方法

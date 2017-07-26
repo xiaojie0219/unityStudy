@@ -1,6 +1,7 @@
 package com.sinodata.forJMeter;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.jmeter.config.Arguments;
@@ -44,19 +45,12 @@ public class TestJavaSample4OrderQuery extends AbstractJavaSamplerClient{
 		SampleResult sr = new SampleResult();
 		sr.setSampleLabel("Java请求(支付结果查询)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
-		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
-		map.put("DES3", arg0.getParameter("DES3"));
-		
-		map.put("PartnerId", arg0.getParameter("PartnerId"));
-		map.put("TimeStamp", arg0.getParameter("TimeStamp"));
-		map.put("SerialNum", arg0.getParameter("SerialNum"));
-		map.put("Version", arg0.getParameter("Version"));
-		map.put("AreaCode", arg0.getParameter("AreaCode"));
-		
-		map.put("StationCode", arg0.getParameter("StationCode"));
-		map.put("OrderId", arg0.getParameter("OrderId"));
-		map.put("OutOrderId", arg0.getParameter("OutOrderId"));
+		Iterator<String> it = arg0.getParameterNamesIterator();
+		while (it.hasNext()){
+			String key = (String) it.next();
+			String value = arg0.getParameter(key);
+			map.put(key, value);
+		}
 
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
@@ -100,6 +94,7 @@ public class TestJavaSample4OrderQuery extends AbstractJavaSamplerClient{
 	// main只是为了调试用，最后打jar包的时候注释掉。
 /*
 	public static void main(String[] args) {
+
 		// TODO Auto-generated method stub
 		Arguments params = new Arguments();
 		params.addArgument("ipAndPort", "10.10.35.146:8188");// 设置参数，并赋予默认值

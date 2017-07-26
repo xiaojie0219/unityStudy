@@ -1,6 +1,7 @@
 package com.sinodata.forJMeter;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.jmeter.config.Arguments;
@@ -46,33 +47,26 @@ public class TestJavaSampleLottMoney extends AbstractJavaSamplerClient {
 		SampleResult sr = new SampleResult();
 		sr.setSampleLabel("Java请求(站点缴款)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("ipAndPort", arg0.getParameter("ipAndPort"));
-		map.put("agentSecretKey", arg0.getParameter("agentSecretKey"));
-		map.put("DES3", arg0.getParameter("DES3"));
-		
-		map.put("PartnerId", arg0.getParameter("PartnerId"));
-		map.put("TimeStamp", arg0.getParameter("TimeStamp"));
-		map.put("SerialNum", arg0.getParameter("SerialNum"));
-		map.put("Version", arg0.getParameter("Version"));
-		map.put("Token", arg0.getParameter("Token"));
-		
-		map.put("RunCode", arg0.getParameter("RunCode"));
-		map.put("StationId", arg0.getParameter("StationId"));
-		map.put("PaymentAmount", arg0.getParameter("PaymentAmount"));
-		map.put("PaymentDate", arg0.getParameter("PaymentDate"));
-		map.put("PaymentTime", arg0.getParameter("PaymentTime"));
-		String strCheckCode = arg0.getParameter("CheckCode");
-		if("default".equals(strCheckCode)){
-			UtilsList ul = new UtilsList();
-			StringBuffer sb = new StringBuffer();
-			sb.append(arg0.getParameter("RunCode")).append("|");
-			sb.append(arg0.getParameter("StationId")).append("|");
-			sb.append(arg0.getParameter("PaymentAmount")).append("|");
-			sb.append(arg0.getParameter("PaymentDate")).append("|");
-			sb.append(arg0.getParameter("PaymentTime")).append("|");
-			map.put("CheckCode", ul.getCheckCode(sb.toString()));
-		}else{
-			map.put("CheckCode", strCheckCode);
+		Iterator<String> it = arg0.getParameterNamesIterator();
+		while (it.hasNext()){
+			String key = (String) it.next();
+			String value = arg0.getParameter(key);
+			if ("CheckCode".equals(key)){
+				if("default".equals(value)){
+					UtilsList ul = new UtilsList();
+					StringBuffer sb = new StringBuffer();
+					sb.append(arg0.getParameter("RunCode")).append("|");
+					sb.append(arg0.getParameter("StationId")).append("|");
+					sb.append(arg0.getParameter("PaymentAmount")).append("|");
+					sb.append(arg0.getParameter("PaymentDate")).append("|");
+					sb.append(arg0.getParameter("PaymentTime")).append("|");
+					map.put(key, ul.getCheckCode(sb.toString()));
+				}else{
+					map.put(key, value);
+				}
+			}else{
+				map.put(key, value);
+			}
 		}
 		
 		try {

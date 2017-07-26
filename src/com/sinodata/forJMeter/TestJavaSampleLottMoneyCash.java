@@ -9,7 +9,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSampleQueryTicketEx extends AbstractJavaSamplerClient {
+public class TestJavaSampleLottMoneyCash extends AbstractJavaSamplerClient {
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -29,7 +29,14 @@ public class TestJavaSampleQueryTicketEx extends AbstractJavaSamplerClient {
 		params.addArgument("Version", "1.0.0.0");
 		params.addArgument("Token", "92EA48927E3BFA1755A64FBC16B6B901");
 		
-		params.addArgument("TicketCode", "");
+		params.addArgument("RunCode", "");
+		params.addArgument("BankCode", "");
+		params.addArgument("StationId", "");
+		params.addArgument("PaymentType", "");
+		params.addArgument("PaymentAmount", "");
+		params.addArgument("PaymentDate", "");
+		params.addArgument("PaymentTime", "");
+		params.addArgument("CheckCode", "default");
 		return params;
 	}
 
@@ -40,24 +47,42 @@ public class TestJavaSampleQueryTicketEx extends AbstractJavaSamplerClient {
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求(查询彩票信息)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求(站点缴款e支付)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		Iterator<String> it = arg0.getParameterNamesIterator();
 		while (it.hasNext()){
 			String key = (String) it.next();
 			String value = arg0.getParameter(key);
-			map.put(key, value);
+			if ("CheckCode".equals(key)){
+				if("default".equals(value)){
+					UtilsList ul = new UtilsList();
+					StringBuffer sb = new StringBuffer();
+					sb.append(arg0.getParameter("RunCode")).append("|");
+					sb.append(arg0.getParameter("BankCode")).append("|");
+					sb.append(arg0.getParameter("StationId")).append("|");
+					sb.append(arg0.getParameter("PaymentType")).append("|");
+					sb.append(arg0.getParameter("PaymentAmount")).append("|");
+					sb.append(arg0.getParameter("PaymentDate")).append("|");
+					sb.append(arg0.getParameter("PaymentTime")).append("|");
+					map.put(key, ul.getCheckCode(sb.toString()));
+				}else{
+					map.put(key, value);
+				}
+			}else{
+				map.put(key, value);
+			}
 		}
+		
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
 					map.get("DES3"), map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试查询彩票信息"输出到Jmeter的察看结果树中的请求里。
-			sr.setRequestHeaders("测试查询彩票信息");
+			sr.setRequestHeaders("测试站点缴款e支付");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4QueryTicketEx());
+			resultData = String.valueOf(hr.getResponseData4LottMoneyCash());
 			if (resultData != null && resultData.length() > 0 ) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);

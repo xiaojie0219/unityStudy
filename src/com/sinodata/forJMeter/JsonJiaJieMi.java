@@ -32,10 +32,10 @@ public class JsonJiaJieMi {
 	}
 	
 	public static void main(String args[]) throws UnsupportedEncodingException, Exception{
-		JsonJiaJieMi jjj = new JsonJiaJieMi("0FD2672D2A5A5C4DA5200002","zhongxinyinhang123456789");
-		String str = new String(jjj.jiaMiNoBASE64("hello world"),"UTF-8");
-		System.out.println("加密后：" + str);
+		JsonJiaJieMi jjj = new JsonJiaJieMi("5BC78A05708643763E756635","zhongxinyinhang123456789");
+		String str = new String(jjj.jiaMi("hello world"));
+//		System.out.println("加密后：" + str);
 		
-//		System.out.println("解密后：" + jjj.jieMiNoBASE64(str));
+		System.out.println("解密后：" + jjj.jieMi("EHbQZPLS8RybKnTYonWDALB/GUfwzdBa6XMT3QooFFUCWVMoTxKisW8ShzVGeziscEGKenO0Nws="));
 	}
 }
