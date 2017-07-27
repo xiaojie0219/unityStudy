@@ -58,7 +58,8 @@ public class TestJavaSampleAgentTicketData extends AbstractJavaSamplerClient{
 			sr.setRequestHeaders("测试河南验票查询");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4AgentTicketData());
+			String uri = "/api/access/do?cmd=agentTicketData&";
+			resultData = String.valueOf(hr.getResponseData(uri));
 			if (resultData != null && resultData.length() > 0) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);

@@ -58,7 +58,8 @@ public class TestJavaSampleQueryPrizeCode extends AbstractJavaSamplerClient {
 			sr.setRequestHeaders("开奖公告查询");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4QueryPrizeCode());
+			String uri = "/api/access/do?cmd=queryPrizeCode&";
+			resultData = String.valueOf(hr.getResponseData(uri));
 			if (resultData != null && resultData.length() > 0 ) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);

@@ -64,7 +64,8 @@ public class TestJavaSample4TicketOrder extends AbstractJavaSamplerClient{
 			sr.setRequestHeaders("测试电脑票出票通知");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4TicketOrder());
+			String uri = "/api/access/notice?cmd=ticketorder&";
+			resultData = String.valueOf(hr.getResponseData(uri));
 			if (resultData != null && resultData.length() > 0) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);

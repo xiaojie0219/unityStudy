@@ -94,83 +94,10 @@ public class HttpRequest {
 		return b;
 	}
 	
-	public String getResponseData4Auth() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=auth&";
+	public String getResponseData(String uri) throws  UnsupportedEncodingException, Exception{
 		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
 	}
-	public String getResponseData4QueryPrize() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=queryPrize&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4QueryPrizeCode() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=queryPrizeCode&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4QueryCode() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=queryCode&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4QueryTicketEx() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=queryTicketEx&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4QueryTerm() throws UnsupportedEncodingException, Exception {
-		String uri = "/api/access/do?cmd=queryTerm&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4ImageTicket() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=imageTicket&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4AgentTicket() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=agentTicket&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4EncashCheckJkp() throws  UnsupportedEncodingException, Exception{
-		String uri = "/access/comm/agent/encashCheckJkp?";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4EncashJkp() throws  UnsupportedEncodingException, Exception{
-		String uri = "/access/comm/agent/encashJkp?";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4LottMoney() throws  UnsupportedEncodingException, Exception{
-		String uri = "/access/lottMoney?";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4AgentTicketInfo()  throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=agentTicketInfo&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4AgentTicketData() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=agentTicketData&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4OrderCreate() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/pay?cmd=barcodeordercreate&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4OrderQuery() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/pay?cmd=orderquery&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4TicketOrder() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/notice?cmd=ticketorder&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4CTicketOrder() throws  UnsupportedEncodingException, Exception{
-		String uri = "/access/CTicketOrder?";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4LottMoneyCash() throws  UnsupportedEncodingException, Exception{
-		String uri = "/access/lottMoneyCash?";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-	public String getResponseData4SendSms() throws  UnsupportedEncodingException, Exception{
-		String uri = "/api/access/do?cmd=sendSms&";
-		return new String(threeDES.decryptMode(sendPost(uri), agentSecretKey),"UTF-8");
-	}
-
+	
 	/*
 	public static void main(String[] args) throws Exception {
 		Map<String,String> map = new HashMap<String,String>();

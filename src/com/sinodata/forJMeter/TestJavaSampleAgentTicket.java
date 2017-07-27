@@ -9,7 +9,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
+public class TestJavaSampleAgentTicket extends AbstractJavaSamplerClient{
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -58,7 +58,8 @@ public class TestJavaSampleAgentTicke extends AbstractJavaSamplerClient{
 			sr.setRequestHeaders("测试彩票查询");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4AgentTicket());
+			String uri = "/api/access/do?cmd=agentTicket&";
+			resultData = String.valueOf(hr.getResponseData(uri));
 			if (resultData != null && resultData.length() > 0) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);

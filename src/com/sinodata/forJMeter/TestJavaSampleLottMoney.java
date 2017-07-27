@@ -78,7 +78,8 @@ public class TestJavaSampleLottMoney extends AbstractJavaSamplerClient {
 			sr.setRequestHeaders("测试站点缴款");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			resultData = String.valueOf(hr.getResponseData4LottMoney());
+			String uri = "/access/lottMoney?";
+			resultData = String.valueOf(hr.getResponseData(uri));
 			if (resultData != null && resultData.length() > 0 ) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);
