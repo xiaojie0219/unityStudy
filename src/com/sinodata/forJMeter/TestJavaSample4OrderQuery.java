@@ -56,7 +56,7 @@ public class TestJavaSample4OrderQuery extends AbstractJavaSamplerClient{
 			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
 			//调用HttpRequest原始请求方法
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"),map);
+					 map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试身份验证"输出到Jmeter的察看结果树中的请求里。
 			sr.setRequestHeaders("测试支付结果查询");

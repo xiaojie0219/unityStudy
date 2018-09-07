@@ -21,10 +21,11 @@ public class HttpRequest {
 	private Map<String,String> mapData = null;
 	private JSONObject basicParam = new JSONObject();
 	private JSONObject reqContent = new JSONObject();
+	private final String DES3 = "zhongxinyinhang123456789";
 	
-	public HttpRequest(String agentSecretKey, String des3, String ipAndPort, Map<String,String> mapdata){
+	public HttpRequest(String agentSecretKey,String ipAndPort, Map<String,String> mapdata){
 		HttpRequest.agentSecretKey = agentSecretKey;
-		threeDES = new ThreeDES(des3);
+		threeDES = new ThreeDES(DES3);
 		this.ipAndPort = ipAndPort;
 		mapData = mapdata;
 		for (String key : mapData.keySet()) {
@@ -33,7 +34,7 @@ public class HttpRequest {
 					&& !"DES3".equals(key) && !"TestElement.name".equals(key)) {
 				if ("PartnerId".equals(key) || "TimeStamp".equals(key)
 						|| "SerialNum".equals(key) || "Version".equals(key)
-						|| "Token".equals(key)) {
+						|| "Token".equals(key) ||"AreaCode".equals(key)){
 					basicParam.put(key, value);
 				} else {
 					reqContent.put(key, value);
@@ -55,8 +56,8 @@ public class HttpRequest {
 			uc.setDoInput(true);
 			
 			uc.setUseCaches(false);
-			uc.setReadTimeout(10000);
-			uc.setConnectTimeout(10000);
+			uc.setReadTimeout(30000);
+			uc.setConnectTimeout(30000);
 			OutputStream os = uc.getOutputStream();
 			DataOutputStream dos = new DataOutputStream(os);
 			dos.write(data);

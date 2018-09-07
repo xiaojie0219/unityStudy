@@ -63,8 +63,8 @@ public class FTPCryptUtil {
 //						.getBytes());
 //		System.out.println(bs);
 		
-		String strTmp = FTPCryptUtil.encrypt("12010014|60391359127349513372|10000|2016-12-04|05:36:17".getBytes());
-		String strTmp1 = FTPCryptUtil.encrypt("12010014|60391359127349513372|10000|2016-12-04|05:36:17".getBytes());
+		String strTmp = FTPCryptUtil.encrypt("22012001|51960293221745435981|15000|2018-06-03|18:05:30".getBytes());
+		String strTmp1 = FTPCryptUtil.encrypt("22012001|81950499159652894895|15000|2018-06-03|18:05:57".getBytes());
 		System.out.println(strTmp);
 		try {
 			FTPCryptUtil.writeFile("d:\\1\\ftp.txt",strTmp);

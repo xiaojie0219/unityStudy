@@ -2,6 +2,7 @@ package com.sinodata.tools;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -12,7 +13,7 @@ public class TestFile {
 
 	public static void main(String[] args) {
 		
-		File f = new File("D:\\1\\cash_20160101.ffl");
+		File f = new File("D:\\1\\windata_K3_0909055.txt");
 		try {
 			
 			FileInputStream fis = new FileInputStream(f);
@@ -24,6 +25,10 @@ public class TestFile {
 			
 			String content = decrypt(buffer);
 			System.out.println("解密后的内容：\n" + content);
+			
+//			FileOutputStream fos = new FileOutputStream("D:\\1\\test_decode.txt");
+//			fos.write(content.getBytes(""));
+//			fos.close();
 	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,7 +48,7 @@ public class TestFile {
 		byte[] decryptC = null;
 		try {
 			decryptC = new BASE64().decryptBASE64(new String(content, "utf-8"));
-			byte[] str = ThreeDES.decryptMode(decryptC, "zhongxinyinhang123456789".getBytes("utf-8"));
+			byte[] str = ThreeDES.decryptMode(decryptC, "shandongfucaiftpfile2015".getBytes("utf-8"));
 			decryptContent = new String(str, "utf-8");
 		} catch (Exception e) {
 			e.printStackTrace();

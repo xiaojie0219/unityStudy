@@ -9,7 +9,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-public class TestJavaSample4CTicketOrder extends AbstractJavaSamplerClient{
+public class TestJavaSample4NewAuth extends AbstractJavaSamplerClient{
 
 	/** Holds the result data (shown as Response Data in the Tree display). */
 	private String resultData;
@@ -19,17 +19,16 @@ public class TestJavaSample4CTicketOrder extends AbstractJavaSamplerClient{
 	// 设置可用参数以及它们的默认值；
 	public Arguments getDefaultParameters() {
 		Arguments params = new Arguments();
-		params.addArgument("ipAndPort", "10.10.36.142:8189");
-		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200001");
+		params.addArgument("ipAndPort", "10.10.35.146:8188");
+		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200003");
 		params.addArgument("DES3", "zhongxinyinhang123456789");
 		
-		params.addArgument("PartnerId", "00001");
-		params.addArgument("TimeStamp", "2016-04-27 10:39:10");
-		params.addArgument("SerialNum", "2016040001113");
+		params.addArgument("PartnerId", "00003");
+		params.addArgument("TimeStamp", "2016-10-24 15:10:10");
+		params.addArgument("SerialNum", "1234567");
 		params.addArgument("Version", "1.0.0.0");
-		params.addArgument("Token", "${Token}");
 		
-		params.addArgument("OrderNo", "");
+		params.addArgument("Sign", "${sign}");
 		
 		return params;
 	}
@@ -41,7 +40,7 @@ public class TestJavaSample4CTicketOrder extends AbstractJavaSamplerClient{
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求(电脑票出票查询)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求(文件证书身份验证)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		Iterator<String> it = arg0.getParameterNamesIterator();
 		while (it.hasNext()){
@@ -56,10 +55,10 @@ public class TestJavaSample4CTicketOrder extends AbstractJavaSamplerClient{
 					 map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试身份验证"输出到Jmeter的察看结果树中的请求里。
-			sr.setRequestHeaders("测试电脑票出票查询");
+			sr.setRequestHeaders("测试文件证书身份验证");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
-			String uri = "/access/CTicketOrder?";
+			String uri = "/api/access/auth?";
 			resultData = String.valueOf(hr.getResponseData(uri));
 			if (resultData != null && resultData.length() > 0) {
 				sr.setResponseData(resultData, null);

@@ -12,8 +12,8 @@ package com.sinodata.tools;
  */
 public class GetAgentKey {
 	public static void main(String[] args) {
-		String agentId = "37010101";
-		String insertTime = "20170622091902";
+		String agentId = "00007";
+		String insertTime = "20180630114807";
 		try {
 			String privateKye = MD5Security.md5To24(agentId + insertTime.substring(0, 8) + "sino" + insertTime.substring(8, insertTime.length()));
 			System.out.println(privateKye);

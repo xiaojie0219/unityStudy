@@ -1,11 +1,5 @@
 package com.sinodata.tools;
 
-
-/**
- * 
- */
-
-
 /**
  * @author Administrator
  *
@@ -151,7 +145,5 @@ public class UtilsList
 		}
 		return reByte;
 	}
-	
-	
 
 }

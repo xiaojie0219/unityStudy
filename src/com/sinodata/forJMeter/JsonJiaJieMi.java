@@ -6,6 +6,10 @@ public class JsonJiaJieMi {
 	private String secretKey;
 	private ThreeDES td;
 
+	public JsonJiaJieMi(String secretKey) {
+		this(secretKey,"zhongxinyinhang123456789");
+	}
+	
 	public JsonJiaJieMi(String secretKey, String DES3) {
 		this.secretKey = secretKey;
 		td = new ThreeDES(DES3);

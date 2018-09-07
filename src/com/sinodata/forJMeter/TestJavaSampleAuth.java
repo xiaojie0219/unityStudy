@@ -22,11 +22,13 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient{
 		params.addArgument("ipAndPort", "10.10.35.146:8188");
 		params.addArgument("agentSecretKey", "0FD2672D2A5A5C4DA5200003");
 		params.addArgument("DES3", "zhongxinyinhang123456789");
-		params.addArgument("Sign", "SIKnEgpRix0lXhfXheMqGyZpHqEkojI8V8zTTHfwVl6hklyb2tK99En4ZHlH/hz2UFbV8KR5vrA+pd6XTi5Ujd2ilkbjgSRATCvUg3WcNoQaAsyXYnsFVqbljBV0EAmgRSHGGp3yZBew8t/lM2Hf92VjjvoKpIURdbCICctVK8I=");
+		
 		params.addArgument("PartnerId", "00003");
 		params.addArgument("TimeStamp", "2016-10-24 15:10:10");
 		params.addArgument("SerialNum", "1234567");
 		params.addArgument("Version", "1.0.0.0");
+		
+		params.addArgument("Sign", "${sign}");
 		
 		return params;
 	}
@@ -50,7 +52,7 @@ public class TestJavaSampleAuth extends AbstractJavaSamplerClient{
 			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
 			//调用HttpRequest原始请求方法
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"),map);
+					 map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试身份验证"输出到Jmeter的察看结果树中的请求里。
 			sr.setRequestHeaders("测试身份验证");

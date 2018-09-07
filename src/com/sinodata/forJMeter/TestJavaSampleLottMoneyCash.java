@@ -76,7 +76,7 @@ public class TestJavaSampleLottMoneyCash extends AbstractJavaSamplerClient {
 		try {
 			sr.sampleStart();// jmeter 开始统计响应时间标记
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"),map);
+					 map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试查询彩票信息"输出到Jmeter的察看结果树中的请求里。
 			sr.setRequestHeaders("测试站点缴款e支付");
@@ -84,14 +84,17 @@ public class TestJavaSampleLottMoneyCash extends AbstractJavaSamplerClient {
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
 			String uri = "/access/lottMoneyCash?";
 			resultData = String.valueOf(hr.getResponseData(uri));
-			if (resultData != null && resultData.length() > 0 ) {
+			if (resultData != null && resultData.length() > 0) {
 				sr.setResponseData(resultData, null);
 				sr.setDataType(SampleResult.TEXT);
+				sr.setSuccessful(true);
+				/**
 				if (resultData.contains("SUCCESS")){
-					sr.setSuccessful(true);
+					sr.setSuccessful(true);//设置测试结果标记为成功，则在察看结果树中显示为绿色。如标记为失败，则显示为红色
 				}else{
 					sr.setSuccessful(false);
 				}
+				*/
 			}
 			
 //			 System.out.println("响应解密后：" + resultData);

@@ -40,7 +40,7 @@ public class TestJavaSampleAgentTicketData extends AbstractJavaSamplerClient{
 	// 开始测试
 	public SampleResult runTest(JavaSamplerContext arg0) {
 		SampleResult sr = new SampleResult();
-		sr.setSampleLabel("Java请求(河南验票查询)");//察看结果树的标题显示
+		sr.setSampleLabel("Java请求(二维码验票查询)");//察看结果树的标题显示
 		Map<String, String> map = new HashMap<String, String>();
 		Iterator<String> it = arg0.getParameterNamesIterator();
 		while (it.hasNext()){
@@ -52,10 +52,10 @@ public class TestJavaSampleAgentTicketData extends AbstractJavaSamplerClient{
 			sr.sampleStart();// jmeter 开始统计响应时间标记，类似于LR的事务开始点
 			//调用HttpRequest原始请求方法
 			HttpRequest hr = new HttpRequest(map.get("agentSecretKey"),
-					map.get("DES3"), map.get("ipAndPort"),map);
+					 map.get("ipAndPort"),map);
 			
 			// 通过下面的操作可以将"测试身份验证"输出到Jmeter的察看结果树中的请求里。
-			sr.setRequestHeaders("测试河南验票查询");
+			sr.setRequestHeaders("测试二维码验票查询");
 			
 			// 通过下面的操作可以将被测方法的响应输出到Jmeter的察看结果树中的响应数据里。
 			String uri = "/api/access/do?cmd=agentTicketData&";
